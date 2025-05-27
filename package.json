@@ -1,0 +1,40 @@
+{
+  "name": "poemgenerator",
+  "version": "1.0.0",
+  "description": "This is a js web app to generate a random poem of the day",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack serve --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alkandrana/PoemGenerator.git"
+  },
+  "keywords": [
+    "poetry",
+    "search"
+  ],
+  "author": "Rosa Myers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alkandrana/PoemGenerator/issues"
+  },
+  "homepage": "https://github.com/alkandrana/PoemGenerator#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.3",
+    "@babel/preset-env": "^7.27.2",
+    "copy-webpack-plugin": "^13.0.0",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  },
+  "dependencies": {
+    "babel-loader": "^10.0.0",
+    "bootstrap": "^5.3.6"
+  }
+}

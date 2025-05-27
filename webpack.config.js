@@ -5,7 +5,8 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'poemgenerator.bundle.js',
+        filename: '[name].js',
+        chunkFilename: '[id].[chunkhash].js'
     },
     module: {
         rules: [

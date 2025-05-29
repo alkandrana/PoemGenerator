@@ -1,5 +1,6 @@
 const path = require('path');
 const htmlWebpackPlugin = require("html-webpack-plugin");
+const copyPlugin = require("copy-webpack-plugin");
 module.exports = {
     mode: 'development',
     entry: {
@@ -43,7 +44,14 @@ module.exports = {
             chunks: ["search"],
             inject: "body",
             filename: "search.html",
-        })
+        }),
+        new copyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, "src/css"),
+                    to: path.resolve(__dirname, "dist/css")
+                }
+                ]})
     ],
     devtool: 'inline-source-map',
     devServer: {

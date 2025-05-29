@@ -2,7 +2,10 @@ const path = require('path');
 const htmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: {
+        home: './src/index.js',
+        search: './src/search.js'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
@@ -30,7 +33,16 @@ module.exports = {
     },
     plugins: [
         new htmlWebpackPlugin({
-            template: "./index.html"
+            template: "./index.html",
+            chunks: ["home"],
+            inject: "body",
+            filename: "index.html",
+        }),
+        new htmlWebpackPlugin({
+            template: "./search.html",
+            chunks: ["search"],
+            inject: "body",
+            filename: "search.html",
         })
     ],
     devtool: 'inline-source-map',

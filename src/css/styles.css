@@ -10,3 +10,58 @@ nav {
 .contrast {
     color: #A19B9B;
 }
+
+.custom-border {
+    border: 5px outset black;
+}
+
+/* Google fonts */
+.inknut-antiqua-light {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+.inknut-antiqua-regular {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+.inknut-antiqua-medium {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+.inknut-antiqua-semibold {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+.inknut-antiqua-bold {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+.inknut-antiqua-extrabold {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 800;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+.inknut-antiqua-black {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 900;
+    font-style: normal;
+    letter-spacing: 2px;
+    font-size: 20px;
+}

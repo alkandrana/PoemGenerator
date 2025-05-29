@@ -2,3 +2,11 @@
 nav {
     background-color: #280505;
 }
+
+.navbar .btn {
+    background-color: #22009F;
+}
+
+.contrast {
+    color: #A19B9B;
+}

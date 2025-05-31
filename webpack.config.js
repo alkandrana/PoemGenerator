@@ -4,8 +4,8 @@ const copyPlugin = require("copy-webpack-plugin");
 module.exports = {
     mode: 'development',
     entry: {
-        home: './src/index.js',
-        search: './src/search.js'
+        home: './src/js/index.js',
+        search: './src/js/search.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -34,13 +34,13 @@ module.exports = {
     },
     plugins: [
         new htmlWebpackPlugin({
-            template: "./index.html",
+            template: "./src/index.html",
             chunks: ["home"],
             inject: "body",
             filename: "index.html",
         }),
         new htmlWebpackPlugin({
-            template: "./search.html",
+            template: "./src/search.html",
             chunks: ["search"],
             inject: "body",
             filename: "search.html",

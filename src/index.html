@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="src/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body class="bg-dark text-primary inknut-antiqua-black">
     <nav class="navbar navbar-expand-sm navbar-dark">
@@ -28,7 +28,7 @@
                     <a class="btn btn-primary" href="./stats.html" id="status">Timeline</a>
                 </li>
                 <li class="nav-item col">
-                    <a class="btn btn-primary" href="./search.html" id="about">Search</a>
+                    <a class="btn btn-primary" href="search.html" id="about">Search</a>
                 </li>
             </ul>
         </div>
@@ -46,15 +46,16 @@
             </div>
             <div class="row">
             <div class="col-4 custom-border" id="sidebar">
-                <div id="poem-list" class="ps-3 contrast h6 pt-3">Other poems by William Shakespeare:</div>
+                <h6 id="sidebar-header">Other poems by William Shakespeare:</h6>
+                <div id="sidebar-list" class="ps-3 contrast h6 pt-3"></div>
             </div>
             <div class="col text-center custom-border" id="poem">
                 <h3 id="poem-title" class="py-5 mx-auto">
                     Orpheus with his Lute Made Trees
                 </h3>
                 <!-- Placeholder text while I design the interface -->
-                <div class="contrast">
-                <p>Orpheus with his lute made trees,</p>
+                <div class="contrast" id="poem-text">
+                    <p>Orpheus with his lute made trees,</p>
                     <p>And the mountain tops that freeze,</p>
                     <p>Bow themselves, when he did sing:</p>
                     <p>To his music plants and flowers</p>

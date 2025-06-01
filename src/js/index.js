@@ -184,7 +184,7 @@ function setPage(gen){
     showPoem(gen);
 }
 
-function printList(list, outputEl){
+export function printList(list, outputEl){
     let output = '';
     for(let i = 0; i < list.length; i++){
         if (list[i] === ""){

@@ -38,37 +38,24 @@
                 </div>
                 <div class="col-2 p-3">
                     <select class="form-select" id="type">
-                        <option value="">select type</option>
-                        <option value="author">Author</option>
-                        <option value="title">Title</option>
-                        <option value="line">Line</option>
+                        <option value="author">author</option>
+                        <option value="title" selected>title</option>
+                        <option value="lines">lines</option>
                     </select>
                 </div>
                 <button type="button" class="btn btn-primary col-md-2 m-3" id="newPoem">Search</button>
             </div>
             <div class="row">
             <div class="col-4 custom-border" id="sidebar">
-                <div id="poem-list" class="ps-3 pt-3 contrast">Search Results:</div>
+                <div id="poem-list" class="ps-3 pt-3 contrast">Search Results:
+                <br/>
+                </div>
             </div>
             <div class="col custom-border ms-3 ps-3 text-center" id="poem">
-                <h3 id="poem-title" class="py-5">
-                    Orpheus with his Lute Made Trees
-                </h3>
-                <span>[Single search result will appear here]</span>
-                <!-- Placeholder text while I design the interface -->
-                <div class="contrast ps-3">
-                <p>Orpheus with his lute made trees,</p>
-                    <p>And the mountain tops that freeze,</p>
-                    <p>Bow themselves, when he did sing:</p>
-                    <p>To his music plants and flowers</p>
-                    <p>Ever sprung; as sun and showers</p>
-                    <p>There had made a lasting spring.</p>
-                    <p>Everything that heard him play,</p>
-                    <p>Even the billows of the sea,</p>
-                    <p>Hung their heads, and then lay by.</p>
-                    <p>In sweet music is such art,</p>
-                    <p>Killing care and grief of heart</p>
-                    <p>Fall asleep, or hearing, die.</p>
+                <h3 id="poem-title" class="py-5"></h3>
+                <p id="length"></p>
+                <div class="contrast ps-3" id="poem-text">
+                    <p>No search results.</p>
                 </div>
             </div>
             </div>

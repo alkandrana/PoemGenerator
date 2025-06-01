@@ -6,12 +6,12 @@ export class Generator {
 
 
     constructor() {
-        this.getAuthor();
+        this.apiFetch = this.getAuthor();
     }
 
     getAuthor() {
         console.log(`Starting fetch: ${this.apiUrl}`);
-        fetch(`${this.apiUrl}author`)
+        return fetch(`${this.apiUrl}author`)
         .then(res => res.json())
         .then(data => {
             this.authors = data.authors;

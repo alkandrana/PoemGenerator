@@ -4,6 +4,7 @@ import {printList} from "./index.js";
 const poemEl = document.getElementById('poem-text');
 const titleEl = document.getElementById('poem-title');
 const lengthEl = document.getElementById('length');
+const listEl = document.getElementById('poem-list');
 class Search {
     apiUrl = 'https://poetrydb.org/';
     searchResults = [];
@@ -52,15 +53,23 @@ function addEventHandlers(gen){
     }
 }
 
+function clearSearchResults(){
+    listEl.innerHTML = 'Search Results:';
+    titleEl.innerHTML = '';
+    lengthEl.innerHTML = '';
+    poemEl.innerHTML = 'No search results.';
+}
+
 window.onload = () => {
     const search = new Search();
     const searchBtn = document.getElementById('newPoem');
     const input = document.getElementById('key');
     searchBtn.addEventListener('click', () => {
         const searchType = document.getElementById("type").value;
+        clearSearchResults();
         search.search(input.value, searchType).then( () => {
             for (let title of search.searchResults) {
-                document.getElementById('poem-list').innerHTML +=
+                listEl.innerHTML +=
                     `<p><a href="" class="poem-link p-5">${title}</a></p>`;
             }
             addEventHandlers(search);

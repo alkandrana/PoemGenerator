@@ -9,6 +9,7 @@ const image = document.getElementById('image');
 const newBtn = document.getElementById('newPoem');
 // poem section elements
 const title = document.getElementById('poem-title');
+const poemLength = document.getElementById('length');
 const text = document.getElementById('poem-text');
 // poem list section elements
 const header = document.getElementById('sidebar-header');
@@ -20,6 +21,7 @@ function showPoem(gen){
     removeCurrentTitle(gen.poem); // exclude the title of the displayed poem from the list of "other poems"
     printList(gen.poem.poemList, list);
     title.innerHTML = gen.poem.title;
+    poemLength.innerHTML = `${gen.poem.size} lines`;
     printList(gen.poem.lines, text);
 }
 function removeCurrentTitle(poem){
@@ -202,6 +204,6 @@ window.onload = () => {
     newBtn.onclick = () => {
         showPoem(poemGen);
         localStorage["poem"] = JSON.stringify(poemGen.poem);
-        poemGen.getPoem();
+        poemGen.getAuthor();
     };
 }

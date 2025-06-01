@@ -6,18 +6,17 @@ export class Generator {
 
 
     constructor() {
-        this.apiFetch = this.getAuthor();
+        this.getAuthor();
     }
 
     getAuthor() {
         console.log(`Starting fetch: ${this.apiUrl}`);
-        return fetch(`${this.apiUrl}author`)
+        fetch(`${this.apiUrl}author`)
         .then(res => res.json())
         .then(data => {
             this.authors = data.authors;
             this.poem.date = new Date(Date.now());
-            console.log("Authors:")
-            console.log(this.authors);
+            this.poem.author = this.authors[Math.floor(Math.random() * this.authors.length)];
             this.getPoem();
         })
         .catch(error => {
@@ -30,8 +29,6 @@ export class Generator {
         .then(data => {
             const randP = Math.floor(Math.random() * data.length);
             const rawPoem = data[randP];
-            console.log("Poem:")
-            console.log(rawPoem);
             this.poem = {
                 author: rawPoem.author,
                 title: rawPoem.title,
@@ -51,8 +48,6 @@ export class Generator {
             for (let i = 0; i < data.length; i++) {
                 this.poem.poemList.push(data[i].title);
             }
-            console.log("List of Poems");
-            console.log(this.poem.poemList);
         });
     }
 

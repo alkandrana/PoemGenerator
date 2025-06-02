@@ -1,53 +1,26 @@
 import '../css/styles.css';
 import {printList} from "./index.js";
+import {Generator} from "./generator";
 
 const poemEl = document.getElementById('poem-text');
 const titleEl = document.getElementById('poem-title');
 const lengthEl = document.getElementById('length');
 const listEl = document.getElementById('poem-list');
-class Search {
-    apiUrl = 'https://poetrydb.org/';
-    searchResults = [];
-    poem = null;
-
-
-
-    search(keyword, type){
-        return fetch(`${this.apiUrl}${type}/${keyword}`)
-            .then(response => response.json())
-            .then(data => {
-                const searchResults = [];
-                for (let poem of data) {
-                    searchResults.push(poem.title);
-                }
-                console.log(this.searchResults);
-                this.searchResults = searchResults;
-            })
-            .catch(error => console.log(error));
-    }
-
-    refineSearch(title){
-        return fetch(`${this.apiUrl}title/${title}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 1){
-                this.poem = data[0];
-            }
-        })
-            .catch(error => console.log(error));
-    }
-}
+const searchBtn = document.getElementById('newPoem');
+const input = document.getElementById('key');
+const searchType = document.getElementById("type").value;
 
 function addEventHandlers(gen){
     const links = document.getElementsByClassName('poem-link');
     for (let link of links){
         link.onclick = (event) => {
             event.preventDefault();
-            gen.refineSearch(link.innerHTML)
-                .then( _ => {
-                    titleEl.innerHTML = `${gen.poem.title}<br/>By ${gen.poem.author}`;
-                    lengthEl.innerHTML = `${gen.poem.linecount} lines`;
-                    printList(gen.poem.lines, poemEl);
+            gen.search(link.innerHTML, "title")
+                .then( searchResults => {
+                    const poem = searchResults[0]
+                    titleEl.innerHTML = `${poem.title}<br/>By ${poem.author}`;
+                    lengthEl.innerHTML = `${poem.linecount} lines`;
+                    printList(poem.lines, poemEl);
                 });
         };
     }
@@ -61,18 +34,15 @@ function clearSearchResults(){
 }
 
 window.onload = () => {
-    const search = new Search();
-    const searchBtn = document.getElementById('newPoem');
-    const input = document.getElementById('key');
+    const gen = new Generator();
     searchBtn.addEventListener('click', () => {
-        const searchType = document.getElementById("type").value;
         clearSearchResults();
-        search.search(input.value, searchType).then( () => {
-            for (let title of search.searchResults) {
+        gen.search(input.value, searchType).then( (searchResults) => {
+            for (let title of searchResults) {
                 listEl.innerHTML +=
                     `<p><a href="" class="poem-link p-5">${title}</a></p>`;
             }
-            addEventHandlers(search);
+            addEventHandlers(gen);
         });
     });
 

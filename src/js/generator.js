@@ -12,6 +12,7 @@ export class Generator {
     apiUrl = 'https://poetrydb.org/';
 
     // basic API code
+    // perform any type of search (title, author, line...); returns a list of titles that represent the poems that resulted from the search
     search(keyword, type){
         return fetch(`${this.apiUrl}${type}/${keyword}`)
             .then(response => response.json())
@@ -24,7 +25,8 @@ export class Generator {
             })
             .catch(error => console.log(error));
     }
-    getAuthor() {
+    // return a list of all authors in the database
+    getAuthors() {
         console.log(`Starting fetch: ${this.apiUrl}`);
         return fetch(`${this.apiUrl}author`)
         .then(res => res.json())
@@ -35,20 +37,22 @@ export class Generator {
             console.log("There was a problem retrieving the data. Message: " + error);
         });
     }
-    getPoem(){
-        const randP = Math.floor(Math.random() * this.poem.poemList.length);
-        return this.search(this.poem.poemList[randP], "title")
-            .then(searchResults  => {
-                return fetch(`${this.apiUrl}title/${searchResults[0]}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        const rawPoem = data[0];
-                        this.poem.title = rawPoem.title;
-                        this.poem.size = rawPoem.linecount;
-                        this.poem.lines = rawPoem.lines;
-                        console.log(this.poem);
-                    }).catch(error => {console.log(error)});
-            });
+
+    // search the database for a specific poem by title; returns the poem object and assigns it to the instance variable (object literal)
+    getPoem(title){
+        return fetch(`${this.apiUrl}title/${title}`)
+            .then(res => res.json())
+            .then(data => {
+                return data[0];
+            }).catch(error => {console.log(error)});
+    }
+
+    savePoem(poemData){
+        this.poem.author = poemData.author;
+        this.poem.title = poemData.title;
+        this.poem.size = poemData.linecount;
+        this.poem.lines = poemData.lines;
+        console.log(this.poem);
     }
 
 

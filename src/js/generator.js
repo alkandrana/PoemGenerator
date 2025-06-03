@@ -1,3 +1,4 @@
+// Created by Rosa Lee Myers, 05-28-2025
 console.log("In Generator: ")
 export class Generator {
     poem = {

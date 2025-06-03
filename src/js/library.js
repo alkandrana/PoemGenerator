@@ -17,11 +17,8 @@ export function addEventHandlers(gen, linksList, titleEl, lengthEl, textEl) {
     }
 }
 
-export function clearSearchResults(listEl, titleEl, lengthEl, poemEl){
+export function clearSearchResults(listEl){
     listEl.innerHTML = '';
-    titleEl.innerHTML = '';
-    lengthEl.innerHTML = '';
-    poemEl.innerHTML = 'No results.';
 }
 
 export function printList(list, outputEl){

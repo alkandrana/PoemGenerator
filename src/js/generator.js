@@ -13,7 +13,8 @@ export class Generator {
     apiUrl = 'https://poetrydb.org/';
 
     // basic API code
-    // perform any type of search (title, author, line...); returns a list of titles that represent the poems that resulted from the search
+
+    // perform any type of search (title, author, line...);
     search(keyword, type){
         return fetch(`${this.apiUrl}${type}/${keyword}`)
             .then(response => response.json())
@@ -22,6 +23,7 @@ export class Generator {
                 for (let p of data) {
                     searchResults.push(p.title);
                 }
+                // returns a list of titles that represent the poems that resulted from the search
                 return searchResults;
             })
             .catch(error => console.log(error));
@@ -39,7 +41,7 @@ export class Generator {
         });
     }
 
-    // search the database for a specific poem by title; returns the poem object and assigns it to the instance variable (object literal)
+    // search the database for a specific poem by title; returns the poem object
     getPoem(title){
         return fetch(`${this.apiUrl}title/${title}`)
             .then(res => res.json())
@@ -48,6 +50,7 @@ export class Generator {
             }).catch(error => {console.log(error)});
     }
 
+    // takes in a poem object (return from api call) and saves it to the instance variable (object literal)
     savePoem(poemData){
         this.poem.author = poemData.author;
         this.poem.title = poemData.title;

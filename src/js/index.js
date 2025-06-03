@@ -75,11 +75,16 @@ function printLinkList(list, outputEl){
 }
 window.onload = () => {
     const poemGen = new Generator();
+    // make an initial api call, save it to the object literal, and add it to localStorage
     setPage(poemGen);
+    // convert the poem list already on the page to "links" that perform an api search based on the title
     io.addEventHandlers(poemGen, links, title, poemLength, text);
     newBtn.onclick = () => {
-        io.clearSearchResults(list, title, poemLength, text);
+        // clear the previous list of poems from the page
+        io.clearSearchResults(list);
+        // display the contents of the poem object literal on the page
         showPoem(poemGen);
+        // perform another api search and save the result to the object literal and localStorage
         generatePoem(poemGen);
     };
 }

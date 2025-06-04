@@ -2,19 +2,26 @@
 import '../css/styles.css';
 import {Page} from './page.js'
 
-
+function insertSelect(search){
+    // create select element
+    const searchTypeEl = document.createElement("select");
+    // set attributes
+    searchTypeEl.id = "type";
+    searchTypeEl.classList.add("form-select", "col-sm", "me-2");
+    // set options
+    searchTypeEl.innerHTML = `<option value="author">author</option>
+            <option value="title" selected>title</option>
+            <option value="lines">lines</option>`;
+    // insert select element after input
+    search.headerInput.insertAdjacentElement("afterend", searchTypeEl);
+}
 function setSearch(search){
     // set page title
     search.pageTitle.innerHTML = "Search";
     // fill header section
     search.headerLabel.innerHTML = "Search: ";
     search.headerInput.innerHTML = `<input type="text" id="key" class="form-control"/>`;
-    search.headerExtra.innerHTML =
-        `<select class="form-select" id="type">
-            <option value="author">author</option>
-            <option value="title" selected>title</option>
-            <option value="lines">lines</option>
-        </select>`;
+    insertSelect(search);
     search.apiBtn.innerHTML = "Search";
     // fill poem list
     search.listHeader.innerHTML = "Search Results";
@@ -47,10 +54,7 @@ window.onload = () => {
             else
             {
                 // iterate over the results and print the titles to the poem list section
-                for (let title of searchResults) {
-                    search.list.innerHTML +=
-                        `<p><a href="" class="poem-link">${title}</a></p>`;
-                }
+               search.printLinkList(searchResults);
                 // add event handlers to each title to turn them into "links" that perform an api search based on their title
                 search.addEventHandlers();
             }

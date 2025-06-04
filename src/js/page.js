@@ -13,7 +13,6 @@ export class Page {
         // listHeader section elements
         this.headerLabel = document.getElementById('descr');
         this.headerInput = document.getElementById('input');
-        this.headerExtra = document.getElementById('supplement');
         this.apiBtn = document.getElementById('apiBtn');
         // poem section elements
         this.title = document.getElementById('poem-title');
@@ -67,11 +66,13 @@ export class Page {
     }
 
     showPoem(){
+        // header section: Name of poet
         this.headerInput.innerHTML = this.gen.poem.author;
-        this.listHeader.innerHTML = this.page === "home" ? `Other poems by ${this.gen.poem.author}` : 'Search Results: ';
-        this.removeCurrentTitle(); // exclude the title of the displayed poem from the list of "other poems"
-        this.printLinkList();
+        // list of poems by the featured author
+        this.listHeader.innerHTML = this.page === "home" ? `Poems by ${this.gen.poem.author}` : 'Search Results: ';
+        this.printLinkList(this.gen.poem.poemList);
         this.addEventHandlers();
+        // poem text section
         this.title.innerHTML = this.gen.poem.title;
         this.poemLength.innerHTML = `${this.gen.poem.size} lines`;
         this.printList();
@@ -89,21 +90,16 @@ export class Page {
         this.text.innerHTML = output;
     }
 
-    printLinkList(){
-        for (let i = 0; i < this.gen.poem.poemList.length; i++){
-            this.list.innerHTML += `<p class="p-3"><a href="" class="poem-link">${this.gen.poem.poemList[i]}</a></p>`;
+    printLinkList(list){
+        let linkList = '';
+        for (let i = 0; i < list.length; i++){
+            linkList += `<p><a href="" class="poem-link">${list[i]}</a></p>`;
         }
-    }
-
-    removeCurrentTitle(){
-        let index = this.gen.poem.poemList.indexOf(this.gen.poem.title);
-        if (index !== -1) {
-            this.gen.poem.poemList.splice(index, 1);
-        }
+        this.list.innerHTML = linkList;
     }
 
     clearSearchResults(){
-        this.list.innerHTML = '';
+        this.list.innerHTML = 'Loading...';
     }
 
     generateHtml(){
@@ -142,7 +138,6 @@ export class Page {
                     <div class="row p-5 align-items-end">
                         <h2 class="col-sm" id="descr">Placeholder</h2>
                         <div class="col-sm" id="input">William Wordsworth</div>
-                        <div class="col-sm" id="supplement"></div>
                         <button type="button" class="btn btn-primary col-md-2" id="apiBtn">Fetch</button>
                     </div>
                     <div class="row">

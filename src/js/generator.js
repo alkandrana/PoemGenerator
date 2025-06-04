@@ -17,15 +17,7 @@ export class Generator {
     // perform any type of search (title, author, line...);
     search(keyword, type){
         return fetch(`${this.apiUrl}${type}/${keyword}`)
-            .then(response => {
-                let result;
-                if (response.ok) {
-                    result = response.json()
-                } else {
-                    result = "No results found."
-                }
-                return result;
-            })
+            .then(response => response.json())
             .then(data => {
                 let searchResults = [];
                 if (!data.status) {
@@ -68,6 +60,7 @@ export class Generator {
         this.poem.title = poemData.title;
         this.poem.size = poemData.linecount;
         this.poem.lines = poemData.lines;
+        console.log("Next Poem:")
         console.log(this.poem);
     }
 

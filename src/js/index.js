@@ -13,7 +13,8 @@ function setHome(page){
     page.apiBtn.innerText = "New Poem";
     // fill poem list
     page.listHeader.innerText = "Other poems by William Wordsworth";
-    page.list.innerHTML = `<p><a href="" id="poem-link">Lines Written in Early Spring</a></p>`;
+    page.list.innerHTML = `<p><a href="" class="poem-link">Lines Written in Early Spring</a>
+                            <p><a href="" class="poem-link">I Wandered Lonely As A Cloud</a></p>`;
     page.title.innerText = "I Wandered Lonely As A Cloud";
     page.poemLength.innerText = `24 lines`;
     page.text.innerHTML = `

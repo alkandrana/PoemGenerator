@@ -3,22 +3,26 @@
 import {Generator} from "./generator";
 
 export class Page {
-    // header section elements
-    headerLabel = document.getElementById('descr');
-    headerInput = document.getElementById('input')
-    apiBtn = document.getElementById('newPoem');
-    // poem section elements
-    title = document.getElementById('poem-title');
-    poemLength = document.getElementById('length');
-    text = document.getElementById('poem-text');
-    // poem list section elements
-    header = document.getElementById('sidebar-header');
-    list = document.getElementById('sidebar-list');
-    links = document.getElementsByClassName('poem-link');
+
 
     constructor(page) {
         console.log("Constructing...");
         this.generateHtml();
+        // HTML elements
+        this.pageTitle = document.getElementsByTagName("title")[0];
+        // listHeader section elements
+        this.headerLabel = document.getElementById('descr');
+        this.headerInput = document.getElementById('input')
+        this.apiBtn = document.getElementById('apiBtn');
+        // poem section elements
+        this.title = document.getElementById('poem-title');
+        this.poemLength = document.getElementById('poem-length');
+        this.text = document.getElementById('poem-text');
+        // poem list section elements
+        this.listHeader = document.getElementById('sidebar-list');
+        this.list = document.getElementById('sidebar-list');
+        this.links = document.getElementsByClassName('poem-link');
+        // api class
         this.gen = new Generator();
         this.page = page;
     }
@@ -61,8 +65,8 @@ export class Page {
     }
 
     showPoem(){
-        name.innerHTML = this.gen.poem.author;
-        this.header.innerHTML = this.page === "home" ? `Other poems by ${this.gen.poem.author}` : 'Search Results: ';
+        this.headerInput.innerHTML = this.gen.poem.author;
+        this.listHeader.innerHTML = this.page === "home" ? `Other poems by ${this.gen.poem.author}` : 'Search Results: ';
         this.removeCurrentTitle(); // exclude the title of the displayed poem from the list of "other poems"
         this.printLinkList();
         this.addEventHandlers();
@@ -134,16 +138,16 @@ export class Page {
             <div class="container-fluid">
                 <main class="bg-dark text-primary mx-auto">
                     <div class="row p-5 align-items-end">
-                        <h2 class="col-sm" id="descr"></h2>
-                        <div class="col-sm h3" id="input"></div>
-                        <button type="button" class="btn btn-primary col-md-2" id="apiBtn"></button>
+                        <h2 class="col-sm" id="descr">Placeholder</h2>
+                        <div class="col-sm h3" id="input">William Wordsworth</div>
+                        <button type="button" class="btn btn-primary col-md-2" id="apiBtn">Fetch</button>
                     </div>
                     <div class="row">
                         <div class="col-4 custom-border" id="sidebar">
                             <h6 id="sidebar-header" class="pt-3"></h6>
-                            <ul id="sidebar-list" class="ps-3 contrast h6 pt-3">
+                            <div id="sidebar-list" class="ps-3 contrast h6 pt-3">
                                 <p><a href="" class="poem-link"></a></p>
-                            </ul>
+                            </div>
                         </div>
                         <div class="col text-center custom-border" id="poem">
                             <h3 id="poem-title" class="py-5 mx-auto"></h3>

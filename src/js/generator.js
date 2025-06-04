@@ -17,11 +17,23 @@ export class Generator {
     // perform any type of search (title, author, line...);
     search(keyword, type){
         return fetch(`${this.apiUrl}${type}/${keyword}`)
-            .then(response => response.json())
+            .then(response => {
+                let result;
+                if (response.ok) {
+                    result = response.json()
+                } else {
+                    result = "No results found."
+                }
+                return result;
+            })
             .then(data => {
-                const searchResults = [];
-                for (let p of data) {
-                    searchResults.push(p.title);
+                let searchResults = [];
+                if (!data.status) {
+                    for (let p of data) {
+                        searchResults.push(p.title);
+                    }
+                } else {
+                    searchResults.push("No results found.");
                 }
                 // returns a list of titles that represent the poems that resulted from the search
                 return searchResults;

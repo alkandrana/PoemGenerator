@@ -1,23 +1,59 @@
 // Created by Rosa Lee Myers, 05-29-2025
 import '../css/styles.css';
 import {Page} from './page.js'
-const input = document.getElementById('key');
-const searchType = document.getElementById("type");
+
+
+function setSearch(search){
+    // set page title
+    search.pageTitle.innerHTML = "Search";
+    // fill header section
+    search.headerLabel.innerHTML = "Search: ";
+    search.headerInput.innerHTML = `<input type="text" id="key" class="form-control"/>`;
+    search.headerExtra.innerHTML =
+        `<select class="form-select" id="type">
+            <option value="author">author</option>
+            <option value="title" selected>title</option>
+            <option value="lines">lines</option>
+        </select>`;
+    search.apiBtn.innerHTML = "Search";
+    // fill poem list
+    search.listHeader.innerHTML = "Search Results";
+    search.list.innerHTML = "No search results<br/>Try entering a keyword in the search box above. " +
+        "You can search for all or part of a title, author name, or poem line.";
+    // fill poem section with placeholder text
+    search.title.innerHTML = "Poem Title";
+    search.poemLength.innerHTML = "Line Count";
+    search.text.innerHTML = "Select a title in the search results on the left to display the poem's text here";
+}
 
 window.onload = () => {
-    const search = new Page('search')
+    // set up the page
+    const search = new Page('search');
+    setSearch(search);
+    // get the form elements
+    const input = document.getElementById('key');
+    const searchType = document.getElementById("type");
+    // perform an api search on button click
     search.apiBtn.addEventListener('click', () => {
         //clear the previous list of poems so that the new search replaces them
         search.clearSearchResults();
         // search based on input values from the form
         search.gen.search(input.value, searchType.value).then( (searchResults) => {
-            // iterate over the results and print the titles to the poem list section
-            for (let title of searchResults) {
-                search.list.innerHTML +=
-                    `<p><a href="" class="poem-link">${title}</a></p>`;
+            if (searchResults[0] === "No results found.")
+            {
+                search.list.innerHTML = searchResults[0];
+                search.list.classList.add("text-danger");
             }
-            // add event handlers to each title to turn them into "links" that perform an api search based on their title
-            search.addEventHandlers();
+            else
+            {
+                // iterate over the results and print the titles to the poem list section
+                for (let title of searchResults) {
+                    search.list.innerHTML +=
+                        `<p><a href="" class="poem-link">${title}</a></p>`;
+                }
+                // add event handlers to each title to turn them into "links" that perform an api search based on their title
+                search.addEventHandlers();
+            }
         });
     });
 }

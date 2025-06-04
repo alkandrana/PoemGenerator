@@ -9,6 +9,7 @@ function setHome(page){
     // fill the listHeader
     page.headerLabel.innerText = "Featured Poet:";
     page.headerInput.innerText = "William Wordsworth";
+    page.headerInput.classList.add("h3");
     page.apiBtn.innerText = "New Poem";
     // fill poem list
     page.listHeader.innerText = "Other poems by William Wordsworth";

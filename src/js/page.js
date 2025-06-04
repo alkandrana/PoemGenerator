@@ -12,14 +12,15 @@ export class Page {
         this.pageTitle = document.getElementsByTagName("title")[0];
         // listHeader section elements
         this.headerLabel = document.getElementById('descr');
-        this.headerInput = document.getElementById('input')
+        this.headerInput = document.getElementById('input');
+        this.headerExtra = document.getElementById('supplement');
         this.apiBtn = document.getElementById('apiBtn');
         // poem section elements
         this.title = document.getElementById('poem-title');
         this.poemLength = document.getElementById('poem-length');
         this.text = document.getElementById('poem-text');
         // poem list section elements
-        this.listHeader = document.getElementById('sidebar-list');
+        this.listHeader = document.getElementById('sidebar-header');
         this.list = document.getElementById('sidebar-list');
         this.links = document.getElementsByClassName('poem-link');
         // api class
@@ -33,10 +34,11 @@ export class Page {
                 event.preventDefault();
                 this.gen.getPoem(link.innerHTML)
                     .then(result => {
-                        const newPoem = result;
-                        this.title.innerHTML = `${newPoem.title}`;
-                        this.poemLength.innerHTML = `${newPoem.linecount} lines`;
-                        this.printList(newPoem.lines, this.text);
+                        this.gen.savePoem(result);
+                        this.title.innerHTML = this.page === "search" ? `${this.gen.poem.title}
+                            <p>by ${this.gen.poem.author}` : `${this.gen.poem.title}`;
+                        this.poemLength.innerHTML = `${this.gen.poem.size} lines`;
+                        this.printList();
                     });
             };
         }
@@ -89,7 +91,7 @@ export class Page {
 
     printLinkList(){
         for (let i = 0; i < this.gen.poem.poemList.length; i++){
-            this.list.innerHTML += `<li class="p-3"><a href="" class="poem-link">${this.gen.poem.poemList[i]}</a></li>`;
+            this.list.innerHTML += `<p class="p-3"><a href="" class="poem-link">${this.gen.poem.poemList[i]}</a></p>`;
         }
     }
 
@@ -139,20 +141,21 @@ export class Page {
                 <main class="bg-dark text-primary mx-auto">
                     <div class="row p-5 align-items-end">
                         <h2 class="col-sm" id="descr">Placeholder</h2>
-                        <div class="col-sm h3" id="input">William Wordsworth</div>
+                        <div class="col-sm" id="input">William Wordsworth</div>
+                        <div class="col-sm" id="supplement"></div>
                         <button type="button" class="btn btn-primary col-md-2" id="apiBtn">Fetch</button>
                     </div>
                     <div class="row">
                         <div class="col-4 custom-border" id="sidebar">
-                            <h6 id="sidebar-header" class="pt-3"></h6>
-                            <div id="sidebar-list" class="ps-3 contrast h6 pt-3">
+                            <h4 id="sidebar-header" class="pt-3"></h4>
+                            <div id="sidebar-list" class="ps-3 contrast pt-3">
                                 <p><a href="" class="poem-link"></a></p>
                             </div>
                         </div>
                         <div class="col text-center custom-border" id="poem">
-                            <h3 id="poem-title" class="py-5 mx-auto"></h3>
+                            <h3 id="poem-title" class="py-3 mx-auto"></h3>
                             <p id="poem-length"></p>
-                            <div class="contrast" id="poem-text"></div>
+                            <div class="contrast pb-3" id="poem-text"></div>
                         </div>
                     </div>
                 </main>

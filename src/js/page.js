@@ -62,12 +62,16 @@ export class Page {
     // get a new poem with an api call
     generatePoem(){
         this.gen.poem.author = this.gen.authors[Math.floor(Math.random() * this.gen.authors.length)]; // random author
-        return this.gen.search(this.gen.poem.author, "author").then(searchResults => { // list of poems by that author
-            this.gen.poem.poemList = searchResults;
-            const newPoem = this.gen.poem.poemList[Math.floor(Math.random() * this.gen.poem.poemList.length)]; // random poem title
-            // save poem to object literal and local storage
-            this.gen.savePoem(newPoem);
-            localStorage["poem"] = JSON.stringify(this.gen.poem);
+        return this.gen.search(this.gen.poem.author, "author").then(searchResults => {// list of poems by that author
+            if (typeof(searchResults) !== "object"){
+                this.showError(searchResults);
+            } else {
+                this.gen.poem.poemList = searchResults;
+                const newPoem = this.gen.poem.poemList[Math.floor(Math.random() * this.gen.poem.poemList.length)]; // random poem title
+                // save poem to object literal and local storage
+                this.gen.savePoem(newPoem);
+                localStorage["poem"] = JSON.stringify(this.gen.poem);
+            }
         });
     }
 
@@ -110,6 +114,7 @@ export class Page {
     // reset the list of poem titles to make way for the next call
     clearSearchResults(){
         this.list.innerHTML = 'Loading...';
+        this.list.classList.remove("text-danger");
     }
 
     showError(fetchResult){

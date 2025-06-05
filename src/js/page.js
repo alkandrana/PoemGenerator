@@ -6,7 +6,6 @@ export class Page {
 
 
     constructor(page) {
-        console.log("Constructing...");
         this.generateHtml();
         // HTML elements
         this.pageTitle = document.getElementsByTagName("title")[0];
@@ -27,6 +26,7 @@ export class Page {
         this.page = page;
     }
 
+    // convert the list of poems in the sidebar to "links" that load the associated poem
     addEventHandlers() {
         for (let link of this.links) {
             link.onclick = (event) => {
@@ -41,31 +41,37 @@ export class Page {
         }
     }
 
+    // attempt to load the current poem from localStorage
+    // if empty, load a new one with an api call
     loadPoem(){
         try {
             this.gen.poem = JSON.parse(localStorage["poem"]);
             this.gen.authors = JSON.parse(localStorage["authors"]);
             this.showPoem();
         } catch (error) {
-            return this.gen.getAuthors().then(result => {
+            this.gen.getAuthors().then(result => {
                 localStorage["authors"] = JSON.stringify(result);
                 this.gen.authors = result;
-                return this.generatePoem();
+                this.generatePoem().then(_ => this.showPoem());
             });
 
 
         }
     }
+
+    // get a new poem with an api call
     generatePoem(){
         this.gen.poem.author = this.gen.authors[Math.floor(Math.random() * this.gen.authors.length)]; // random author
         return this.gen.search(this.gen.poem.author, "author").then(searchResults => { // list of poems by that author
             this.gen.poem.poemList = searchResults;
             const newPoem = this.gen.poem.poemList[Math.floor(Math.random() * this.gen.poem.poemList.length)]; // random poem title
+            // save poem to object literal and local storage
             this.gen.savePoem(newPoem);
             localStorage["poem"] = JSON.stringify(this.gen.poem);
         });
     }
 
+    // display the stored poem on the page
     showPoem(){
         // header section: Name of poet
         this.headerInput.innerHTML = this.gen.poem.author;
@@ -79,6 +85,7 @@ export class Page {
         this.printList();
     }
 
+    // output the array of poem lines to the page
     printList(){
         let output = '';
         for(let i = 0; i < this.gen.poem.lines.length; i++){
@@ -91,6 +98,7 @@ export class Page {
         this.text.innerHTML = output;
     }
 
+    // print the list of poem titles on the page
     printLinkList(list){
         let linkList = '';
         for (let i = 0; i < list.length; i++){
@@ -99,10 +107,12 @@ export class Page {
         this.list.innerHTML = linkList;
     }
 
+    // reset the list of poem titles to make way for the next call
     clearSearchResults(){
         this.list.innerHTML = 'Loading...';
     }
 
+    // create the skeleton of the html page and add it to the document
     generateHtml(){
         const headSkeleton = `
             <meta charset="UTF-8">
@@ -115,6 +125,7 @@ export class Page {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">`;
         document.getElementsByTagName("head")[0].innerHTML += headSkeleton;
+        //navbar
         const content = document.getElementsByTagName("body")[0];
         const navbar = `
             <nav class="navbar navbar-expand-sm navbar-dark">
@@ -132,13 +143,13 @@ export class Page {
             </nav>`;
         content.classList.add("bg-dark", "text-primary", "inknut-antiqua-black");
         content.innerHTML += navbar;
-
+        // main page content
         const mainSkeleton = `
             <div class="container-fluid">
                 <main class="bg-dark text-primary mx-auto">
                     <div class="row p-5 align-items-end">
-                        <h2 class="col-sm" id="descr">Placeholder</h2>
-                        <div class="col-sm" id="input">William Wordsworth</div>
+                        <h2 class="col-sm" id="descr"></h2>
+                        <div class="col-sm" id="input"></div>
                         <button type="button" class="btn btn-primary col-md-2" id="apiBtn">Fetch</button>
                     </div>
                     <div class="row">

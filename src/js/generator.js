@@ -1,5 +1,5 @@
 // Created by Rosa Lee Myers, 05-28-2025
-console.log("In Generator: ")
+
 export class Generator {
     poem = {
         author: "",
@@ -32,7 +32,6 @@ export class Generator {
     }
     // return a list of all authors in the database
     getAuthors() {
-        console.log(`Starting fetch: ${this.apiUrl}`);
         return fetch(`${this.apiUrl}author`)
         .then(res => res.json())
         .then(data => {
@@ -49,8 +48,6 @@ export class Generator {
         this.poem.title = poemData.title;
         this.poem.size = poemData.linecount;
         this.poem.lines = poemData.lines;
-        console.log("Next Poem:")
-        console.log(this.poem);
     }
 
 

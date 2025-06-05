@@ -112,6 +112,11 @@ export class Page {
         this.list.innerHTML = 'Loading...';
     }
 
+    showError(fetchResult){
+        this.list.innerHTML = fetchResult;
+        this.list.classList.add('text-danger');
+    }
+
     // create the skeleton of the html page and add it to the document
     generateHtml(){
         const headSkeleton = `

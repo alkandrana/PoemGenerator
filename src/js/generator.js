@@ -1,5 +1,4 @@
 // Created by Rosa Lee Myers, 05-28-2025
-
 export class Generator {
     poem = {
         author: "",
@@ -28,7 +27,9 @@ export class Generator {
                 // returns a list of poem objects
                 return searchResults;
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                return "There was an error while performing the search. Please check the search input for errors.";
+            });
     }
     // return a list of all authors in the database
     getAuthors() {

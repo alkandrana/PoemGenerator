@@ -46,7 +46,10 @@ window.onload = () => {
         search.clearSearchResults();
         // search based on input values from the form
         search.gen.search(input.value, searchType.value).then( (searchResults) => {
-            if (searchResults[0] === "No results found.")
+            if (typeof (searchResults) !== "object"){
+                search.showError(searchResults);
+            }
+            else if (searchResults[0] === "No results found.")
             {
                 search.list.innerHTML = searchResults[0];
                 search.list.classList.add("text-danger");

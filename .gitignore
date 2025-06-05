@@ -86,6 +86,7 @@ typings/
 
 # dotenv environment variables file
 .env
+package-lock.json
 
 #Jetbrains system files
 **/.idea/

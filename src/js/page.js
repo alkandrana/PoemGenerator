@@ -31,37 +31,38 @@ export class Page {
         for (let link of this.links) {
             link.onclick = (event) => {
                 event.preventDefault();
-                this.gen.getPoem(link.innerHTML)
-                    .then(result => {
-                        this.gen.savePoem(result);
-                        this.title.innerHTML = this.page === "search" ? `${this.gen.poem.title}
-                            <p>by ${this.gen.poem.author}` : `${this.gen.poem.title}`;
-                        this.poemLength.innerHTML = `${this.gen.poem.size} lines`;
-                        this.printList();
-                    });
-            };
+                const newPoem = this.gen.poem.poemList.find(p => p.title === link.innerHTML);
+                this.gen.savePoem(newPoem);
+                this.title.innerHTML = this.page === "search" ? `${this.gen.poem.title}
+                    <p>by ${this.gen.poem.author}` : `${this.gen.poem.title}`;
+                this.poemLength.innerHTML = `${this.gen.poem.size} lines`;
+                this.printList();
+            }
         }
     }
 
     loadPoem(){
         try {
             this.gen.poem = JSON.parse(localStorage["poem"]);
-            this.showPoem(this.gen);
+            this.gen.authors = JSON.parse(localStorage["authors"]);
+            this.showPoem();
         } catch (error) {
-            this.generatePoem();
+            return this.gen.getAuthors().then(result => {
+                localStorage["authors"] = JSON.stringify(result);
+                this.gen.authors = result;
+                return this.generatePoem();
+            });
+
+
         }
     }
     generatePoem(){
-        this.gen.getAuthors().then(authors => {
-            this.gen.poem.author = authors[Math.floor(Math.random() * authors.length)];
-            this.gen.search(this.gen.poem.author, "author").then(searchResults => {
-                this.gen.poem.poemList = searchResults;
-                const title = this.gen.poem.poemList[Math.floor(Math.random() * this.gen.poem.poemList.length)];
-                this.gen.getPoem(title).then((result) => {
-                    this.gen.savePoem(result);
-                    localStorage["poem"] = JSON.stringify(this.gen.poem);
-                });
-            });
+        this.gen.poem.author = this.gen.authors[Math.floor(Math.random() * this.gen.authors.length)]; // random author
+        return this.gen.search(this.gen.poem.author, "author").then(searchResults => { // list of poems by that author
+            this.gen.poem.poemList = searchResults;
+            const newPoem = this.gen.poem.poemList[Math.floor(Math.random() * this.gen.poem.poemList.length)]; // random poem title
+            this.gen.savePoem(newPoem);
+            localStorage["poem"] = JSON.stringify(this.gen.poem);
         });
     }
 
@@ -93,7 +94,7 @@ export class Page {
     printLinkList(list){
         let linkList = '';
         for (let i = 0; i < list.length; i++){
-            linkList += `<p><a href="" class="poem-link">${list[i]}</a></p>`;
+            linkList += `<p><a href="" class="poem-link">${list[i].title}</a></p>`;
         }
         this.list.innerHTML = linkList;
     }

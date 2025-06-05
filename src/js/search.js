@@ -53,8 +53,10 @@ window.onload = () => {
             }
             else
             {
+                // save the list of poems
+                search.gen.poem.poemList = searchResults;
                 // iterate over the results and print the titles to the poem list section
-               search.printLinkList(searchResults);
+                search.printLinkList(searchResults);
                 // add event handlers to each title to turn them into "links" that perform an api search based on their title
                 search.addEventHandlers();
             }

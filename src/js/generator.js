@@ -21,13 +21,11 @@ export class Generator {
             .then(data => {
                 let searchResults = [];
                 if (!data.status) {
-                    for (let p of data) {
-                        searchResults.push(p.title);
-                    }
+                    searchResults = data;
                 } else {
                     searchResults.push("No results found.");
                 }
-                // returns a list of titles that represent the poems that resulted from the search
+                // returns a list of poem objects
                 return searchResults;
             })
             .catch(error => console.log(error));
@@ -43,15 +41,6 @@ export class Generator {
         .catch(error => {
             console.log("There was a problem retrieving the data. Message: " + error);
         });
-    }
-
-    // search the database for a specific poem by title; returns the poem object
-    getPoem(title){
-        return fetch(`${this.apiUrl}title/${title}`)
-            .then(res => res.json())
-            .then(data => {
-                return data[0];
-            }).catch(error => {console.log(error)});
     }
 
     // takes in a poem object (return from api call) and saves it to the instance variable (object literal)

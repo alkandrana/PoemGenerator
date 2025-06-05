@@ -6,7 +6,6 @@ export class Generator {
         size: 0,
         lines: [],
         poemList: [],
-        date: new Date()
     };
     authors = [];
     apiUrl = 'https://poetrydb.org/';
